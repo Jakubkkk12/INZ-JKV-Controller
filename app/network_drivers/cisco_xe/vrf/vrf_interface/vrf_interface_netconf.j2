@@ -1,0 +1,20 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <interface>
+      <{{ interface.name }}>
+        <name>{{ interface.id }}</name>
+        <vrf operation="{{ operation }}">
+          <forwarding>{{ vrf_name }}</forwarding>
+        </vrf>
+        <ip>
+          <address operation="{{ operation }}">
+            <primary>
+              <address>{{ ipv4_address }}</address>
+              <mask>{{ ipv4_mask }}</mask>
+            </primary>
+          </address>
+        </ip>
+      </{{ interface.name }}>
+    </interface>
+  </native>
+</config>

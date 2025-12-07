@@ -1,0 +1,1 @@
+REST API endpoints which contain logic of management of network project (CRUD)

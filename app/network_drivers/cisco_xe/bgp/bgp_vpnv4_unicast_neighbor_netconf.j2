@@ -1,0 +1,42 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <router>
+      <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
+        <id>{{ asn }}</id>
+        <address-family>
+          <no-vrf>
+            <vpnv4>
+              <af-name>unicast</af-name>
+              <vpnv4-unicast>
+                {% if neighbor %}
+                <neighbor operation="{{ operation }}">
+                  <id>{{ neighbor.ipv4_address }}</id>
+                  <activate/>
+                  {% if neighbor.peer_template.policy_name %}
+                  <inherit>
+                    <peer-policy>{{ neighbor.peer_template.policy_name }}</peer-policy>
+                  </inherit>
+                  {% endif %}
+                  {% if neighbor.route_reflector_client %}
+                  <route-reflector-client/>
+                  {% endif %}
+                  {% if neighbor.send_community_extended %}
+                  <send-community>
+                    <send-community-where>extended</send-community-where>
+                  </send-community>
+                  {% endif %}
+                  {% if neighbor.send_community_both %}
+                  <send-community>
+                    <send-community-where>both</send-community-where>
+                  </send-community>
+                  {% endif %}
+                </neighbor>
+                {% endif %}
+              </vpnv4-unicast>
+            </vpnv4>
+          </no-vrf>
+        </address-family>
+      </bgp>
+    </router>
+  </native>
+</config>

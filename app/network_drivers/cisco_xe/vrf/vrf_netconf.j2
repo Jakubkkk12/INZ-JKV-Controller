@@ -1,0 +1,51 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <vrf>
+      <definition operation="{{ operation }}">
+        <name>{{ name }}</name>
+        {% if rd %}
+        <rd>{{ rd }}</rd>
+        {% endif %}
+        <address-family>
+          <ipv4>
+            {% if maximum_routes %}
+            <maximum>
+              <routes>{{ maximum_routes.max_routes }}</routes>
+              {% if not maximum_routes.warning_only %}
+              <threshold>{{ maximum_routes.warning_threshold }}</threshold>
+              {% if maximum_routes.reinstall_threshold %}
+              <reinstall>{{ maximum_routes.reinstall_threshold }}</reinstall>
+              {% endif %}
+              {% else %}
+              <warning-only/>
+              {% endif %}
+            </maximum>
+            {% endif %}
+            {% if route_target %}
+            <route-target>
+              {% if route_target.export %}
+              <export-route-target>
+                {% for export_rt in route_target.export %}
+                <without-stitching>
+                  <asn-ip>{{ export_rt }}</asn-ip>
+                </without-stitching>
+                {% endfor %}
+              </export-route-target>
+              {% endif %}
+              {% if route_target.import_ %}
+              <import-route-target>
+                {% for import_rt in route_target.import_ %}
+                <without-stitching>
+                  <asn-ip>{{ import_rt }}</asn-ip>
+                </without-stitching>
+                {% endfor %}
+              </import-route-target>
+              {% endif %}
+            </route-target>
+            {% endif %}
+          </ipv4>
+        </address-family>
+      </definition>
+    </vrf>
+  </native>
+</config>

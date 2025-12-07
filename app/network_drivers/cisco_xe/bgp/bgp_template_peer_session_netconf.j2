@@ -1,0 +1,38 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <router>
+      <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
+        <id>{{ asn }}</id>
+        <template>
+         <peer-session operation="{{ operation }}">
+            <name>{{ name }}</name>
+            {% if ebgp_multihop %}
+            <ebgp-multihop>
+              <max-hop>{{ ebgp_multihop }}</max-hop>
+            </ebgp-multihop>
+            {% endif %}
+            {% if remote_asn %}
+            <remote-as>{{ remote_asn }}</remote-as>
+            {% endif %}
+            {% if update_source_interface %}
+            <update-source>
+              <interface>
+                <{{ update_source_interface.name }}>{{ update_source_interface.id }}</{{ update_source_interface.name }}>
+              </interface>
+            </update-source>
+            {% endif %}
+            {% if timers %}
+            <timers>
+              <keepalive-interval>{{ timers.keepalive_interval }}</keepalive-interval>
+              <holdtime>{{ timers.holdtime }}</holdtime>
+              {% if timers.minimum_neighbor_holdtime %}
+              <minimum-neighbor-hold>{{ timers.minimum_neighbor_holdtime }}</minimum-neighbor-hold>
+              {% endif %}
+            </timers>
+            {% endif %}
+          </peer-session>
+        </template>
+      </bgp>
+    </router>
+  </native>
+</config>

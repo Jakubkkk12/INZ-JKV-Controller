@@ -1,0 +1,32 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <interface>
+      <{{ interface.name }}>
+        <name>{{ interface.id }}</name>
+        <mpls>
+          <traffic-eng xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mpls" operation="{{ operation }}">
+            {% if administrative_weight %}
+            <administrative-weight>{{ administrative_weight }}</administrative-weight>
+            {% endif %}
+
+            {% if attribute_flags %}
+            <attribute-flags>{{ attribute_flags }}</attribute-flags>
+            {% endif %}
+
+            {% if backup_path_tunnel_id %}
+            <backup-path>
+              <Tunnel>
+                <name>{{ backup_path_tunnel_id }}</name>
+              </Tunnel>
+            </backup-path>
+            {% endif %}
+
+            {% if enable %}
+            <tunnels/>
+            {% endif %}
+          </traffic-eng>
+        </mpls>
+      </{{ interface.name }}>
+    </interface>
+  </native>
+</config>

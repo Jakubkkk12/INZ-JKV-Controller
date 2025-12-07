@@ -1,0 +1,55 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <router>
+      <bgp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-bgp">
+        <id>{{ asn }}</id>
+        <template>
+          <peer-policy operation="{{ operation }}">
+            <name>{{ name }}</name>
+            {% if route_reflector_client %}
+            <route-reflector-client/>
+            {% endif %}
+            {% if send_community_extended %}
+            <send-community>
+              <send-community-where>extended</send-community-where>
+            </send-community>
+            {% endif %}
+            {% if send_community_both %}
+            <send-community>
+              <send-community-where>both</send-community-where>
+            </send-community>
+            {% endif %}
+            {% if allowas_in %}
+            <allowas-in>
+              <as-number>{{ allowas_in }}</as-number>
+            </allowas-in>
+            {% endif %}
+            {% if as_override %}
+            <as-override>
+            </as-override>
+            {% endif %}
+            {% if maximum_prefix %}
+            <maximum-prefix>
+              <max-prefix-no>{{ maximum_prefix }}</max-prefix-no>
+            </maximum-prefix>
+            {% endif %}
+            {% if next_hop_self %}
+            <next-hop-self>
+            </next-hop-self>
+            {% endif %}
+            {% if remove_private_as %}
+            <remove-private-as>
+            </remove-private-as>
+            {% endif %}
+            {% if soft_reconfiguration_inbound %}
+            <soft-reconfiguration>inbound</soft-reconfiguration>
+            {% endif %}
+            {% if soo %}
+            <soo>{{ soo }}</soo>
+            {% endif %}
+          </peer-policy>
+        </template>
+      </bgp>
+    </router>
+  </native>
+</config>

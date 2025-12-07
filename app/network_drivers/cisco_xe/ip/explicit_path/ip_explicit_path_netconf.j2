@@ -1,0 +1,33 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <ip>
+      <explicit-path>
+        <name operation="{{ operation }}">
+          <pname>{{ name }}</pname>
+          <mode>enable</mode>
+          {% if path_next_address %}
+          {% for entry in path_next_address %}
+          <index>
+            <idx>{{ entry.index }}</idx>
+            <next-address>
+              {% if entry.loose %}
+              <loose/>
+              {% endif %}
+              <ipv4>{{ entry.ipv4_address }}</ipv4>
+            </next-address>
+          </index>
+          {% endfor %}
+          {% endif %}
+          {% if path_exclude_address %}
+          {% for entry in path_exclude_address %}
+          <index>
+            <idx>{{ entry.index }}</idx>
+            <exclude-address>{{ entry.ipv4_address }}</exclude-address>
+          </index>
+          {% endfor %}
+          {% endif %}
+        </name>
+      </explicit-path>
+    </ip>
+  </native>
+</config>

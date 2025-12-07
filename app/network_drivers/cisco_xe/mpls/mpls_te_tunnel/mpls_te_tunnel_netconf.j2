@@ -1,0 +1,128 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+    <interface>
+      <Tunnel operation="{{ operation }}">
+        <name>{{ tunnel_id }}</name>
+        <description>{{ description }}</description>
+        <ip>
+          <unnumbered>{{ ip_source_interface }}</unnumbered>
+        </ip>
+        <tunnel xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-tunnel">
+          <destination-config>
+            <ipv4>{{ destination_ip_address }}</ipv4>
+          </destination-config>
+          <mode>
+            <mpls>
+              <traffic-eng>
+              </traffic-eng>
+            </mpls>
+          </mode>
+          <mpls>
+            <traffic-eng>
+              {% if affinity %}
+              <affinity-mask>
+                <affinity>{{ affinity.value }}</affinity>
+                <mask>{{ affinity.mask }}</mask>
+              </affinity-mask>
+              {% endif %}
+              {% if autoroute_announce %}
+              <autoroute>
+                <announce/>
+              </autoroute>
+              {% endif %}
+              <bandwidth>
+                <bw>{{ bandwidth }}</bw>
+              </bandwidth>
+              {% if exp_values %}
+              <exp>
+                {% for value in exp_values %}
+                <exp-value>{{ value }}</exp-value>
+                {% endfor %}
+              </exp>
+              {% endif %}
+              {% if exp_bundle_master %}
+              <exp-bundle>
+                <master/>
+              </exp-bundle>
+              {% endif %}
+              {% if exp_bundle_member_tunnel_id %}
+              <exp-bundle>
+                <member>
+                  <Tunnel>{{ exp_bundle_member_tunnel_id }}</Tunnel>
+                </member>
+              </exp-bundle>
+              {% endif %}
+              {% if fast_reroute.enabled %}
+              <fast-reroute>
+                {% if fast_reroute.node_protect %}
+                <node-protect/>
+                {% endif %}
+              </fast-reroute>
+              {% endif %}
+             {% if path_option %}
+              <path-option>
+                {% if path_option.paths %}
+                {% for path in path_option.paths  %}
+                <working>
+                  <id>{{ path.id }}</id>
+                  {% if path.is_explicit %}
+                  <explicit>
+                    <name>{{ path.name }}</name>
+                    {% if path.bandwidth %}
+                    <bandwidth>
+                      <bandwidth>{{ path.bandwidth }}</bandwidth>
+                    </bandwidth>
+                    {% endif %}
+                    {% if path.is_lockdown %}
+                    <lockdown/>
+                    {% endif %}
+                  </explicit>
+                  {% endif %}
+                  {% if path.is_dynamic %}
+                  <dynamic>
+                    {% if path.bandwidth %}
+                    <bandwidth>
+                      <bandwidth>{{ path.bandwidth }}</bandwidth>
+                    </bandwidth>
+                    {% endif %}
+                    {% if path.is_lockdown %}
+                    <lockdown/>
+                    {% endif %}
+                  </dynamic>
+                  {% endif %}
+                </working>
+                {% endfor %}
+                {% endif %}
+                {% if path_option.protect_paths %}
+                {% for protect_path in  path_option.protect_paths %}
+                <protect>
+                  <id>{{ protect_path.id }}</id>
+                  <explicit>
+                    <name>{{ protect_path.name }}</name>
+                  </explicit>
+                </protect>
+                {% endfor %}
+                {% endif %}
+              </path-option>
+              {% endif %}
+              {% if path_selection_metric %}
+              <path-selection>
+                <metric>{{ path_selection_metric }}</metric>
+              </path-selection>
+              {% endif %}
+              {% if priority %}
+              <priority>
+                <setup-priority>{{ priority.setup }}</setup-priority>
+                <hold-priority>{{ priority.hold }}</hold-priority>
+              </priority>
+              {% endif %}
+              {% if record_route_enable %}
+              <record-route/>
+              {% endif %}
+            </traffic-eng>
+          </mpls>
+        </tunnel>
+      </Tunnel>
+    </interface>
+  </native>
+</config>
