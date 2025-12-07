@@ -10,7 +10,7 @@ Example REST API requests can be found here:
 
 ### 1 Clone the repository:
 
-git clone https://github.com/Jakubkkk12/INZ-JKV-Controller.git
+git clone https://github.com/Jakubkkk12/INZ-JKV-Controller.git<br>
 cd INZ-JKV-Controller
 
 
@@ -35,4 +35,5 @@ Change the value of SECRET_KEY to your own secure key
 Run the application:
 
 python main.py
+
 
