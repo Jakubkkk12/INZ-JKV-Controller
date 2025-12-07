@@ -1,4 +1,4 @@
-# INZ-JKV-Controller
+****# INZ-JKV-Controller
 ## Description
 
 This project (INZ-JKV-Controller) is a controller application written in Python with web components for managing and monitoring network configuration especially for MPLS L3VPN and MPLS TE. It is part of the “JKV Controller” development project. It provides REST API endpoints to interact with the system.
@@ -16,9 +16,9 @@ cd INZ-JKV-Controller
 
 ### 2 Create a virtual environment:
 
-python3 -m venv venv
-source venv/bin/activate   # Linux/macOS
-or
+python3 -m venv venv<br>
+source venv/bin/activate   # Linux/macOS<br>
+or<br>
 venv\Scripts\activate      # Windows
 
 ### 3 Install dependencies:
@@ -28,12 +28,13 @@ pip install -r requirements.txt
 
 ### 4 Set up environment variables
 
-Open the .env file
+Open the .env file<br>
 
 Change the value of SECRET_KEY to your own secure key
 
-Run the application:
+### 5 Run the application:
 
 python main.py
+
 
 
